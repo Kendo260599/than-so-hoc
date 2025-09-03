@@ -346,26 +346,14 @@ function renderCareerContent(careerInfo, lifePathNumber) {
  * Render feng shui content
  */
 function renderFengShuiContent(fengShuiNumber, directionalLuck) {
-  // Debug logging
-  console.log('🔍 Debug Feng Shui:', {
-    fengShuiNumber,
-    directionalLuck,
-    hasFengShuiData: !!FENG_SHUI_NUMEROLOGY,
-    hasHouseAnalysis: !!FENG_SHUI_NUMEROLOGY?.house_number_analysis,
-    availableNumbers: Object.keys(FENG_SHUI_NUMEROLOGY?.house_number_analysis || {})
-  });
-
   // Import thông tin số nhà từ FENG_SHUI_NUMEROLOGY
   const houseData = FENG_SHUI_NUMEROLOGY?.house_number_analysis?.[fengShuiNumber];
-  
-  console.log('🏠 House Data for number', fengShuiNumber, ':', houseData);
   
   if (!houseData) {
     return `
       <div class="fengshui-content">
         <h3>🏠 Phong Thủy & Năng lượng Vũ trụ</h3>
         <p>⚠️ Không tìm thấy dữ liệu phong thủy cho số ${fengShuiNumber}</p>
-        <p>📊 Debug: Numbers available: ${Object.keys(FENG_SHUI_NUMEROLOGY?.house_number_analysis || {}).join(', ')}</p>
       </div>
     `;
   }

@@ -1,0 +1,22 @@
+{
+  "name": "numerology-calculator",
+  "version": "1.0.0",
+  "description": "A comprehensive numerology calculator with multiple schools and methods",
+  "type": "module",
+  "main": "src/main.js",
+  "scripts": {
+    "dev": "npx serve .",
+    "test": "jest --coverage",
+    "lint": "echo '(optional) add eslint later'"
+  },
+  "keywords": ["numerology", "astrology", "calculator", "spirituality"],
+  "author": "Numerology Calculator",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "@jest/globals": "^29.7.0"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  }
+}

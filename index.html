@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HÀ UYÊN Numerology Calculator</title>
+    <link rel="stylesheet" href="src/styles.css">
+    <link rel="stylesheet" href="src/feng-shui-styles.css">
+    <meta name="description" content="Ứng dụng tính toán thần số học với nhiều trường phái và phương pháp khác nhau">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔮 HÀ UYÊN Numerology</h1>
+            <p class="subtitle">Khám phá bản thân qua các con số với nhiều trường phái tính toán</p>
+        </header>
+
+        <main>
+            <form id="numerologyForm" class="form-container">
+                <!-- Basic Information -->
+                <section class="form-section">
+                    <h2>📝 Thông tin cơ bản</h2>
+                    
+                    <div class="input-group">
+                        <label for="birthName">Họ tên khai sinh</label>
+                        <input type="text" id="birthName" placeholder="Nguyễn Văn A" required>
+                        <small>Họ tên ghi trong giấy khai sinh</small>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="currentName">Họ tên hiện tại</label>
+                        <input type="text" id="currentName" placeholder="Nếu khác với tên khai sinh">
+                        <small>Tên đang sử dụng hiện tại (nếu có)</small>
+                    </div>
+                    
+                    <div class="date-group">
+                        <h3>Ngày sinh</h3>
+                        <div class="date-inputs">
+                            <div class="input-group">
+                                <label for="day">Ngày</label>
+                                <input type="number" id="day" min="1" max="31" placeholder="01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="month">Tháng</label>
+                                <input type="number" id="month" min="1" max="12" placeholder="01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="year">Năm</label>
+                                <input type="number" id="year" min="1900" max="2100" placeholder="1990" required>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Advanced Options -->
+                <section class="form-section">
+                    <div class="options-header">
+                        <h2>⚙️ Trường phái tính (Schools/Methods)</h2>
+                        <button type="button" id="optionsToggle" class="toggle-btn">Hiển thị tùy chọn nâng cao</button>
+                    </div>
+                    
+                    <div id="optionsPanel" class="options-panel collapsed">
+                        <div class="options-grid">
+                            <div class="option-group">
+                                <label for="mapping">Hệ thống mapping</label>
+                                <select id="mapping">
+                                    <option value="pythagorean">Pythagorean (mặc định)</option>
+                                    <option value="chaldean">Chaldean</option>
+                                </select>
+                                <small>Cách gán số cho các chữ cái</small>
+                            </div>
+
+                            <div class="option-group">
+                                <label for="yMode">Cách xử lý chữ Y</label>
+                                <select id="yMode">
+                                    <option value="conditional">Conditional (thông minh)</option>
+                                    <option value="never">Never (luôn là phụ âm)</option>
+                                    <option value="always">Always (luôn là nguyên âm)</option>
+                                </select>
+                                <small>Y là nguyên âm khi nằm giữa hai phụ âm</small>
+                            </div>
+
+                            <div class="option-group">
+                                <label for="lifePathMethod">Phương pháp Con đường đời</label>
+                                <select id="lifePathMethod">
+                                    <option value="segment-then-sum">Rút gọn từng phần rồi cộng</option>
+                                    <option value="flat-sum">Cộng phẳng tất cả</option>
+                                </select>
+                                <small>Cách tính từ ngày sinh</small>
+                            </div>
+
+                            <div class="option-group">
+                                <label for="preserveMasters">Bảo toàn Master Numbers</label>
+                                <select id="preserveMasters">
+                                    <option value="global">Global (mọi bước)</option>
+                                    <option value="final-only">Final only (chỉ kết quả cuối)</option>
+                                    <option value="none">None (không bảo toàn)</option>
+                                </select>
+                                <small>Cách xử lý số 11, 22, 33</small>
+                            </div>
+
+                            <div class="option-group">
+                                <label for="personalYearMethod">Phương pháp Năm cá nhân</label>
+                                <select id="personalYearMethod">
+                                    <option value="standard">Chuẩn</option>
+                                    <option value="birthday-switch">Chuyển đổi theo sinh nhật</option>
+                                </select>
+                                <small>Cách tính năm cá nhân</small>
+                            </div>
+
+                            <div class="option-group">
+                                <label>Nguồn tên cho tính toán</label>
+                                <div class="radio-group">
+                                    <label class="radio-label">
+                                        <input type="radio" name="nameSource" value="birth" checked>
+                                        <span>Tên khai sinh</span>
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="nameSource" value="current">
+                                        <span>Tên hiện tại</span>
+                                    </label>
+                                </div>
+                                <small>Chọn tên để tính Expression, Soul Urge, Personality</small>
+                            </div>
+
+                            <div class="option-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="karmicDebt" checked>
+                                    <span>Hiển thị Karmic Debt (13/14/16/19)</span>
+                                </label>
+                                <small>Phát hiện các số nợ nghiệp (13, 14, 16, 19)</small>
+                            </div>
+
+                            <div class="option-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="pinnaclesChallenges">
+                                    <span>Tính Pinnacles & Challenges</span>
+                                </label>
+                                <small>Các đỉnh cao và thử thách theo độ tuổi</small>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Submit Button -->
+                <div class="submit-section">
+                    <button type="submit" class="calculate-btn">
+                        🔮 Tính các chỉ số
+                    </button>
+                </div>
+            </form>
+
+            <!-- Results Section -->
+            <section id="results" class="results-section" style="display: none;">
+                <!-- Results will be inserted here by JavaScript -->
+            </section>
+
+            <!-- Pinnacles & Challenges Section -->
+            <section id="pinnaclesContainer" class="pinnacles-section" style="display: none;">
+                <!-- Pinnacles and challenges will be inserted here by JavaScript -->
+            </section>
+
+            <!-- Compatibility Analysis Section -->
+            <section id="compatibilityContainer" class="compatibility-section" style="display: none;">
+                <div class="compatibility-form">
+                    <h3>💡 Phân tích tương thích</h3>
+                    <p>Nhập thông tin của hai người để phân tích mức độ tương thích:</p>
+                    
+                    <div class="compatibility-inputs">
+                        <div class="person-input">
+                            <h4>Người thứ nhất</h4>
+                            <div class="form-group">
+                                <label for="person1Name">Họ tên:</label>
+                                <input type="text" id="person1Name" placeholder="Nhập họ tên...">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="person1Day">Ngày:</label>
+                                    <input type="number" id="person1Day" min="1" max="31" placeholder="Ngày">
+                                </div>
+                                <div class="form-group">
+                                    <label for="person1Month">Tháng:</label>
+                                    <input type="number" id="person1Month" min="1" max="12" placeholder="Tháng">
+                                </div>
+                                <div class="form-group">
+                                    <label for="person1Year">Năm:</label>
+                                    <input type="number" id="person1Year" min="1900" max="2100" placeholder="Năm">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="person-input">
+                            <h4>Người thứ hai</h4>
+                            <div class="form-group">
+                                <label for="person2Name">Họ tên:</label>
+                                <input type="text" id="person2Name" placeholder="Nhập họ tên...">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="person2Day">Ngày:</label>
+                                    <input type="number" id="person2Day" min="1" max="31" placeholder="Ngày">
+                                </div>
+                                <div class="form-group">
+                                    <label for="person2Month">Tháng:</label>
+                                    <input type="number" id="person2Month" min="1" max="12" placeholder="Tháng">
+                                </div>
+                                <div class="form-group">
+                                    <label for="person2Year">Năm:</label>
+                                    <input type="number" id="person2Year" min="1900" max="2100" placeholder="Năm">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="compatibility-actions">
+                        <button type="button" id="analyzeCompatibility" class="compatibility-btn">
+                            🔮 Phân tích tương thích
+                        </button>
+                        <button type="button" id="showCompatibilityForm" class="compatibility-toggle-btn">
+                            💡 Hiển thị phân tích tương thích
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="compatibilityResults" style="display: none;">
+                    <!-- Compatibility results will be inserted here by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Enhanced Features Section -->
+            <section id="enhancedContainer" class="enhanced-section" style="display: none;">
+                <!-- Enhanced features will be inserted here by JavaScript -->
+            </section>
+
+            <!-- Advanced Features Section -->
+            <section id="advanced-features" class="advanced-section" style="display: none;">
+                <!-- Advanced features will be inserted here by JavaScript -->
+            </section>
+
+            <!-- Explanations Accordion -->
+            <section class="accordion">
+                <div class="accordion-header">
+                    <h3>📚 Giải thích nhanh về các con số</h3>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="explanations-grid">
+                        <div class="explanation-card">
+                            <h4>1 - Người lãnh đạo</h4>
+                            <p>Độc lập, tiên phong, khởi đầu mới, lãnh đạo tự nhiên</p>
+                        </div>
+                        <div class="explanation-card">
+                            <h4>2 - Người hợp tác</h4>
+                            <p>Hợp tác, ngoại giao, hòa bình, làm việc nhóm</p>
+                        </div>
+                        <div class="explanation-card">
+                            <h4>3 - Người sáng tạo</h4>
+                            <p>Sáng tạo, giao tiếp, biểu đạt nghệ thuật, vui vẻ</p>
+                        </div>
+                        <div class="explanation-card">
+                            <h4>4 - Người xây dựng</h4>
+                            <p>Chăm chỉ, tổ chức, xây dựng nền móng vững chắc</p>
+                        </div>
+                        <div class="explanation-card">
+                            <h4>5 - Người tự do</h4>
+                            <p>Tự do, phiêu lưu, thay đổi năng động, đa dạng</p>
+                        </div>
+                        <div class="explanation-card">
+                            <h4>6 - Người nuôi dưỡng</h4>
+                            <p>Chăm sóc, trách nhiệm, gia đình và cộng đồng</p>
+                        </div>
+                        <div class="explanation-card">
+                            <h4>7 - Người tìm kiếm</h4>
+                            <p>Tâm linh, phân tích, trí tuệ nội tại, chiêm nghiệm</p>
+                        </div>
+                        <div class="explanation-card">
+                            <h4>8 - Người thành đạt</h4>
+                            <p>Thành công vật chất, kinh doanh, quyền lực</p>
+                        </div>
+                        <div class="explanation-card">
+                            <h4>9 - Người nhân đạo</h4>
+                            <p>Nhân đạo, hoàn thành, tình yêu vũ trụ</p>
+                        </div>
+                        <div class="explanation-card master">
+                            <h4>11 - Số Chủ Đạo 11</h4>
+                            <p>Trực giác, cảm hứng, sứ giả tâm linh</p>
+                        </div>
+                        <div class="explanation-card master">
+                            <h4>22 - Số Chủ Đạo 22</h4>
+                            <p>Xây dựng tầm lớn, tầm nhìn thực tế, thành tựu lớn</p>
+                        </div>
+                        <div class="explanation-card master">
+                            <h4>33 - Số Chủ Đạo 33</h4>
+                            <p>Thầy dạy tối cao, phục vụ nhân từ, chữa lành</p>
+                        </div>
+                    </div>
+                    
+                    <div class="disclaimer">
+                        <p><strong>⚠️ Lưu ý:</strong> Thần số học là công cụ mang tính chất tham khảo và chiêm nghiệm. 
+                        Kết quả không nên được coi là lời khuyên chắc chắn về cuộc sống hay quyết định quan trọng.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; <span id="currentYear">2024</span> Máy Tính Thần Số Học. Được tạo với ❤️ để khám phá tâm linh.</p>
+        </footer>
+    </div>
+
+    <script type="module" src="src/main.js"></script>
+</body>
+</html>

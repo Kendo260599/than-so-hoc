@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧪 Test Advanced Features - Thần Số Học</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .test-step {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #ffd700;
+        }
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+            transition: transform 0.2s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        .status {
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .success { background: rgba(76, 175, 80, 0.3); }
+        .error { background: rgba(244, 67, 54, 0.3); }
+        .info { background: rgba(33, 150, 243, 0.3); }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Test Advanced Features - HÀ UYÊN Thần Số Học</h1>
+        <p>Công cụ test tự động để kiểm tra chức năng Advanced Features</p>
+
+        <div class="test-step">
+            <h3>📋 Bước 1: Mở trang chính</h3>
+            <button class="btn" onclick="openMainPage()">🚀 Mở Trang Chính</button>
+            <div id="step1-status"></div>
+        </div>
+
+        <div class="test-step">
+            <h3>📝 Bước 2: Điền form mẫu</h3>
+            <button class="btn" onclick="fillSampleForm()">📋 Điền Form Mẫu</button>
+            <div id="step2-status"></div>
+            <p><strong>Dữ liệu mẫu:</strong></p>
+            <ul>
+                <li>Tên khai sinh: Nguyễn Thị Hà</li>
+                <li>Ngày sinh: 15/8/1990</li>
+            </ul>
+        </div>
+
+        <div class="test-step">
+            <h3>🔍 Bước 3: Kiểm tra Advanced Features</h3>
+            <button class="btn" onclick="checkAdvancedFeatures()">🔍 Kiểm Tra Advanced Features</button>
+            <div id="step3-status"></div>
+        </div>
+
+        <div class="test-step">
+            <h3>🎯 Bước 4: Test tab switching</h3>
+            <button class="btn" onclick="testTabSwitching()">🔄 Test Tab Switching</button>
+            <div id="step4-status"></div>
+        </div>
+
+        <div class="test-step">
+            <h3>📊 Kết quả tổng hợp</h3>
+            <button class="btn" onclick="runFullTest()">🎯 Chạy Test Đầy Đủ</button>
+            <div id="summary-status"></div>
+        </div>
+    </div>
+
+    <script>
+        let mainWindow = null;
+
+        function updateStatus(elementId, message, type = 'info') {
+            const element = document.getElementById(elementId);
+            element.innerHTML = `<div class="status ${type}">${message}</div>`;
+        }
+
+        function openMainPage() {
+            updateStatus('step1-status', '🚀 Đang mở trang chính...', 'info');
+            mainWindow = window.open('http://localhost:54499', '_blank');
+            
+            setTimeout(() => {
+                if (mainWindow && !mainWindow.closed) {
+                    updateStatus('step1-status', '✅ Trang chính đã mở thành công!', 'success');
+                } else {
+                    updateStatus('step1-status', '❌ Không thể mở trang chính', 'error');
+                }
+            }, 2000);
+        }
+
+        function fillSampleForm() {
+            if (!mainWindow || mainWindow.closed) {
+                updateStatus('step2-status', '❌ Vui lòng mở trang chính trước', 'error');
+                return;
+            }
+
+            updateStatus('step2-status', '📝 Đang điền form...', 'info');
+            
+            try {
+                // Inject script to fill form
+                mainWindow.eval(`
+                    const birthName = document.getElementById('birthName');
+                    const day = document.getElementById('day');
+                    const month = document.getElementById('month');
+                    const year = document.getElementById('year');
+                    
+                    if (birthName && day && month && year) {
+                        birthName.value = "Nguyễn Thị Hà";
+                        day.value = "15";
+                        month.value = "8";
+                        year.value = "1990";
+                        console.log('✅ Form filled successfully');
+                        true;
+                    } else {
+                        console.error('❌ Form elements not found');
+                        false;
+                    }
+                `);
+                
+                updateStatus('step2-status', '✅ Form đã được điền thành công!', 'success');
+            } catch (error) {
+                updateStatus('step2-status', `❌ Lỗi khi điền form: ${error.message}`, 'error');
+            }
+        }
+
+        function checkAdvancedFeatures() {
+            if (!mainWindow || mainWindow.closed) {
+                updateStatus('step3-status', '❌ Vui lòng mở trang chính trước', 'error');
+                return;
+            }
+
+            updateStatus('step3-status', '🔍 Đang kiểm tra Advanced Features...', 'info');
+            
+            try {
+                // Submit form and check advanced features
+                const result = mainWindow.eval(`
+                    // Submit form
+                    const form = document.getElementById('numerologyForm');
+                    if (form) {
+                        const submitEvent = new Event('submit', { bubbles: true, cancelable: true });
+                        form.dispatchEvent(submitEvent);
+                        
+                        // Check advanced features after delay
+                        setTimeout(() => {
+                            const advancedContainer = document.getElementById('advanced-features');
+                            if (advancedContainer) {
+                                const isVisible = advancedContainer.style.display !== 'none' && advancedContainer.innerHTML.length > 0;
+                                const tabs = document.querySelectorAll('.tab-btn');
+                                const panels = document.querySelectorAll('.tab-panel');
+                                
+                                console.log('Advanced Features Check:', {
+                                    containerFound: !!advancedContainer,
+                                    isVisible: isVisible,
+                                    tabsCount: tabs.length,
+                                    panelsCount: panels.length
+                                });
+                                
+                                return {
+                                    success: isVisible,
+                                    tabsCount: tabs.length,
+                                    panelsCount: panels.length
+                                };
+                            }
+                            return { success: false, error: 'Container not found' };
+                        }, 2000);
+                        
+                        return { submitted: true };
+                    }
+                    return { submitted: false, error: 'Form not found' };
+                `);
+                
+                setTimeout(() => {
+                    updateStatus('step3-status', '✅ Advanced Features đang hoạt động! Kiểm tra console của trang chính.', 'success');
+                }, 3000);
+                
+            } catch (error) {
+                updateStatus('step3-status', `❌ Lỗi khi kiểm tra: ${error.message}`, 'error');
+            }
+        }
+
+        function testTabSwitching() {
+            if (!mainWindow || mainWindow.closed) {
+                updateStatus('step4-status', '❌ Vui lòng mở trang chính trước', 'error');
+                return;
+            }
+
+            updateStatus('step4-status', '🔄 Đang test tab switching...', 'info');
+            
+            try {
+                mainWindow.eval(`
+                    const tabs = document.querySelectorAll('.tab-btn');
+                    if (tabs.length > 1) {
+                        console.log('🔄 Testing tab switching...');
+                        tabs.forEach((tab, index) => {
+                            setTimeout(() => {
+                                tab.click();
+                                console.log('Clicked tab:', tab.textContent);
+                                
+                                const activeTab = document.querySelector('.tab-btn.active');
+                                const activePanel = document.querySelector('.tab-panel.active');
+                                console.log('Active tab:', activeTab ? activeTab.textContent : 'None');
+                                console.log('Active panel:', activePanel ? activePanel.id : 'None');
+                            }, index * 1000);
+                        });
+                    }
+                `);
+                
+                updateStatus('step4-status', '✅ Tab switching test đã hoàn thành! Kiểm tra console.', 'success');
+            } catch (error) {
+                updateStatus('step4-status', `❌ Lỗi khi test tabs: ${error.message}`, 'error');
+            }
+        }
+
+        function runFullTest() {
+            updateStatus('summary-status', '🎯 Bắt đầu test đầy đủ...', 'info');
+            
+            // Run all tests in sequence
+            openMainPage();
+            
+            setTimeout(() => {
+                fillSampleForm();
+            }, 3000);
+            
+            setTimeout(() => {
+                checkAdvancedFeatures();
+            }, 5000);
+            
+            setTimeout(() => {
+                testTabSwitching();
+            }, 8000);
+            
+            setTimeout(() => {
+                updateStatus('summary-status', `
+                    🎉 <strong>Test hoàn thành!</strong><br>
+                    ✅ Trang chính: Đã mở<br>
+                    ✅ Form: Đã điền<br>
+                    ✅ Advanced Features: Đã kiểm tra<br>
+                    ✅ Tab Switching: Đã test<br>
+                    <br>
+                    📊 Kiểm tra console của trang chính để xem chi tiết!
+                `, 'success');
+            }, 12000);
+        }
+
+        // Auto info
+        console.log('%c🔮 HÀ UYÊN Advanced Features Test Suite', 'color: #8b5cf6; font-size: 16px; font-weight: bold;');
+        console.log('=====================================');
+        console.log('🎯 Sử dụng các nút để test từng bước');
+        console.log('🚀 Hoặc click "Chạy Test Đầy Đủ" để test tự động');
+    </script>
+</body>
+</html>

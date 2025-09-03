@@ -1,0 +1,118 @@
+/* Enhanced Feng Shui Styles */
+.fengshui-content {
+    padding: var(--spacing-lg);
+}
+
+.fengshui-number {
+    background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--spacing-xl);
+    border: 1px solid var(--border-color);
+}
+
+.energy-type,
+.personality,
+.feng-shui-meaning {
+    margin-bottom: var(--spacing-md);
+    padding: var(--spacing-sm) 0;
+}
+
+.house-analysis {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.best-for,
+.challenges,
+.remedies {
+    background: var(--bg-tertiary);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+}
+
+.best-for h4 {
+    color: var(--success-color);
+}
+
+.challenges h4 {
+    color: var(--warning-color);
+}
+
+.remedies h4 {
+    color: var(--accent-primary);
+}
+
+.colors-elements {
+    background: var(--bg-secondary);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--spacing-xl);
+    border: 1px solid var(--border-color);
+}
+
+.lucky-colors,
+.unlucky-colors {
+    margin-bottom: var(--spacing-lg);
+}
+
+.color-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-sm);
+}
+
+.color-tag {
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.color-tag.lucky {
+    background: rgba(16, 185, 129, 0.2);
+    color: var(--success-color);
+    border: 1px solid var(--success-color);
+}
+
+.color-tag.unlucky {
+    background: rgba(239, 68, 68, 0.2);
+    color: var(--error-color);
+    border: 1px solid var(--error-color);
+}
+
+.element-direction {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--border-color);
+}
+
+.element,
+.direction {
+    text-align: center;
+    padding: var(--spacing-md);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+}
+
+/* Responsive Feng Shui */
+@media (max-width: 768px) {
+    .house-analysis {
+        grid-template-columns: 1fr;
+    }
+    
+    .element-direction {
+        grid-template-columns: 1fr;
+    }
+    
+    .color-tags {
+        justify-content: center;
+    }
+}

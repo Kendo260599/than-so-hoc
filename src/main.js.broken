@@ -1,0 +1,725 @@
+/**
+ * Main application entry point
+ */
+
+import { 
+  calcLifePath, 
+  calcExpression, 
+  calcSoulUrge, 
+  calcPersonality, 
+  calcBirthday, 
+  calcMaturity, 
+  calcPersonalYear,
+  calcPinnaclesChallenges,
+  calcKarmicLessons,
+  calcPersonalMonth,
+  calcPersonalDay,
+  calcPersonalCycles,
+  calcHiddenPassion,
+  calcIntensityNumbers,
+  calcPlanesOfExpression,
+  calcLifePathPeriods,
+  calcCompatibility,
+  calcPersonalForecast
+} from './numerology.js';
+
+// Import advanced modules
+import { CRYSTAL_NUMEROLOGY } from './crystal-numerology.js';
+import { COLOR_NUMEROLOGY } from './color-numerology.js';
+import { TIME_CYCLES, calcAdvancedPersonalForecast } from './advanced-forecast.js';
+import { CAREER_NUMEROLOGY } from './career-numerology.js';
+import { DREAM_NUMEROLOGY } from './dream-numerology.js';
+import { FENG_SHUI_NUMEROLOGY, COSMIC_CALCULATIONS } from './feng-shui-numerology.js';
+
+import { 
+  readOptionsFromUI, 
+  renderResults, 
+  renderPinnaclesChallenges,
+  renderEnhancedFeatures,
+  validateForm,
+  hideResults,
+  setupAccordion,
+  setupOptionsToggle,
+  toast
+} from './ui.js';
+
+/**
+ * Calculate all numerology values
+ * @param {string} name - Selected name
+ * @param {Date} date - Birth date
+ * @param {object} options - Calculation options
+ * @returns {object} All calculated values
+ */
+function calculateAll(name, date, options) {
+  const lifePath = calcLifePath(date, options);
+  const expression = calcExpression(name, options);
+  const soulUrge = calcSoulUrge(name, options);
+  const personality = calcPersonality(name, options);
+  const birthday = calcBirthday(date, options);
+  const maturity = calcMaturity(lifePath.value, expression.value, options);
+  const personalYear = calcPersonalYear(date, new Date(), options);
+  
+  // Enhanced calculations
+  const karmicLessons = calcKarmicLessons(name, options);
+  const personalMonth = calcPersonalMonth(date, new Date(), options);
+  const personalDay = calcPersonalDay(date, new Date(), options);
+  const personalCycles = calcPersonalCycles(date, new Date(), 12, options);
+  const hiddenPassion = calcHiddenPassion(name, options);
+  const intensityNumbers = calcIntensityNumbers(name, options);
+  const planesOfExpression = calcPlanesOfExpression(name, options);
+  const lifePathPeriods = calcLifePathPeriods(date, new Date(), options);
+  
+  // Advanced calculations with new modules
+  const crystalInfo = CRYSTAL_NUMEROLOGY[lifePath.value] || {};
+  const colorInfo = COLOR_NUMEROLOGY[lifePath.value] || {};
+  const careerInfo = CAREER_NUMEROLOGY.life_path_careers[lifePath.value] || {};
+  
+  // Format date for advanced forecast
+  const dateString = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+  let advancedForecast = {};
+  try {
+    advancedForecast = calcAdvancedPersonalForecast(date, new Date());
+  } catch (error) {
+    console.error('Error calculating advanced forecast:', error);
+    advancedForecast = {
+      current_personal_year: lifePath.value,
+      universal_year: new Date().getFullYear(),
+      life_phase: 'Analysis',
+      biorhythms: { physical: 50, emotional: 50, intellectual: 50 }
+    };
+  }
+  
+  const fengShuiNumber = COSMIC_CALCULATIONS.calcPersonalFengShuiNumber(dateString);
+  const directionalLuck = COSMIC_CALCULATIONS.calcDirectionalLuck(lifePath.value);
+  
+  return {
+    // Core numbers
+    lifePath,
+    expression,
+    soulUrge,
+    personality,
+    birthday,
+    maturity,
+    personalYear,
+    
+    // Enhanced features
+    karmicLessons,
+    personalMonth,
+    personalDay,
+    personalCycles,
+    hiddenPassion,
+    intensityNumbers,
+    planesOfExpression,
+    lifePathPeriods,
+    
+    // Advanced features
+    crystalInfo,
+    colorInfo,
+    careerInfo,
+    advancedForecast,
+    fengShuiNumber,
+    directionalLuck
+  };
+}
+
+/**
+ * Handle form submission
+ * @param {Event} event - Form submit event
+ */
+function handleSubmit(event) {
+  console.log('Form submit event triggered:', event);
+  event.preventDefault();
+  
+  // Clear previous results
+  hideResults();
+  
+  // Validate form
+  const validation = validateForm();
+  if (!validation) return;
+  
+  const { selectedName, date } = validation;
+  const options = readOptionsFromUI();
+  
+  try {
+    // Calculate all values
+    const results = calculateAll(selectedName, date, options);
+    
+    // Render main results
+    renderResults(results);
+    
+    // Calculate and render pinnacles/challenges if enabled
+    if (options.pinnaclesChallenges) {
+      const pinnaclesData = calcPinnaclesChallenges(date, options);
+      renderPinnaclesChallenges(pinnaclesData);
+    }
+    
+    // Render enhanced features
+    renderEnhancedFeatures(results);
+    
+    // Render advanced features
+    showAdvancedFeatures(results);
+    
+    toast('Tính toán thành công!', 'success');
+    
+  } catch (error) {
+    console.error('Lỗi tính toán:', error);
+    toast('Có lỗi xảy ra khi tính toán. Vui lòng thử lại.');
+  }
+}
+
+/**
+ * Initialize application
+ */
+function init() {
+  console.log('Initializing application...');
+  
+  // Setup form submission
+  const form = document.getElementById('numerologyForm');
+  console.log('Form element found:', form);
+  
+  if (form) {
+    form.addEventListener('submit', handleSubmit);
+    console.log('Form submit event listener added');
+  } else {
+    console.error('Form element not found!');
+  }
+  
+  // Setup UI components
+  setupAccordion();
+  setupOptionsToggle();
+  setupCompatibilityFeature();
+  
+  // Setup current year display
+  const currentYearSpan = document.getElementById('currentYear');
+  if (currentYearSpan) {
+    currentYearSpan.textContent = new Date().getFullYear();
+  }
+  
+  // Hide results initially
+  hideResults();
+  
+  console.log('Máy Tính Thần Số Học đã được khởi tạo');
+}
+
+/**
+ * Setup compatibility analysis feature
+ */
+function setupCompatibilityFeature() {
+  const showCompatibilityBtn = document.getElementById('showCompatibilityForm');
+  const analyzeCompatibilityBtn = document.getElementById('analyzeCompatibility');
+  const compatibilityContainer = document.getElementById('compatibilityContainer');
+  const compatibilityForm = compatibilityContainer?.querySelector('.compatibility-form');
+  const compatibilityResults = document.getElementById('compatibilityResults');
+  
+  // Show/hide compatibility form
+  if (showCompatibilityBtn && compatibilityContainer) {
+    showCompatibilityBtn.addEventListener('click', () => {
+      const isVisible = compatibilityContainer.style.display !== 'none';
+      compatibilityContainer.style.display = isVisible ? 'none' : 'block';
+      showCompatibilityBtn.textContent = isVisible ? '💡 Hiển thị phân tích tương thích' : '🔽 Ẩn phân tích tương thích';
+    });
+  }
+  
+  // Analyze compatibility
+  if (analyzeCompatibilityBtn) {
+    analyzeCompatibilityBtn.addEventListener('click', handleCompatibilityAnalysis);
+  }
+}
+
+/**
+ * Handle compatibility analysis
+ */
+function handleCompatibilityAnalysis() {
+  const person1Name = document.getElementById('person1Name')?.value.trim();
+  const person1Day = parseInt(document.getElementById('person1Day')?.value);
+  const person1Month = parseInt(document.getElementById('person1Month')?.value);
+  const person1Year = parseInt(document.getElementById('person1Year')?.value);
+  
+  const person2Name = document.getElementById('person2Name')?.value.trim();
+  const person2Day = parseInt(document.getElementById('person2Day')?.value);
+  const person2Month = parseInt(document.getElementById('person2Month')?.value);
+  const person2Year = parseInt(document.getElementById('person2Year')?.value);
+  
+  // Validate inputs
+  if (!person1Name || !person1Day || !person1Month || !person1Year) {
+    toast('Vui lòng nhập đầy đủ thông tin người thứ nhất');
+    return;
+  }
+  
+  if (!person2Name || !person2Day || !person2Month || !person2Year) {
+    toast('Vui lòng nhập đầy đủ thông tin người thứ hai');
+    return;
+  }
+  
+  try {
+    const person1 = {
+      name: person1Name,
+      birthDate: new Date(person1Year, person1Month - 1, person1Day)
+    };
+    
+    const person2 = {
+      name: person2Name,
+      birthDate: new Date(person2Year, person2Month - 1, person2Day)
+    };
+    
+    const options = readOptionsFromUI();
+    const compatibilityData = calcCompatibility(person1, person2, options);
+    
+    renderCompatibilityResults(compatibilityData);
+    toast('Phân tích tương thích thành công!', 'success');
+    
+  } catch (error) {
+    console.error('Lỗi phân tích tương thích:', error);
+    toast('Có lỗi xảy ra khi phân tích tương thích. Vui lòng thử lại.');
+  }
+}
+
+/**
+ * Render compatibility analysis results
+ * @param {object} compatibilityData - Compatibility analysis data
+ */
+function renderCompatibilityResults(compatibilityData) {
+  const resultsContainer = document.getElementById('compatibilityResults');
+  if (!resultsContainer) return;
+  
+  const { person1, person2, compatibility, strengths, challenges, advice } = compatibilityData;
+  
+  resultsContainer.innerHTML = `
+    <div class="compatibility-analysis">
+      <h3>🔮 Kết quả phân tích tương thích</h3>
+      
+      <div class="compatibility-overview">
+        <div class="people-summary">
+          <div class="person-summary">
+            <h4>${person1.name}</h4>
+            <div class="person-numbers">
+              <span>Đường đời: ${person1.lifePath.value}</span>
+              <span>Biểu đạt: ${person1.expression.value}</span>
+              <span>Tâm hồn: ${person1.soulUrge.value}</span>
+            </div>
+          </div>
+          <div class="compatibility-score">
+            <div class="score-circle">
+              <span class="score-number">${compatibility.overall.score}</span>
+              <span class="score-label">điểm</span>
+            </div>
+            <div class="score-rating">${compatibility.overall.rating}</div>
+          </div>
+          <div class="person-summary">
+            <h4>${person2.name}</h4>
+            <div class="person-numbers">
+              <span>Đường đời: ${person2.lifePath.value}</span>
+              <span>Biểu đạt: ${person2.expression.value}</span>
+              <span>Tâm hồn: ${person2.soulUrge.value}</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="compatibility-description">
+          <p>${compatibility.overall.description}</p>
+        </div>
+      </div>
+      
+      <div class="compatibility-details">
+        <div class="compatibility-section">
+          <h4>💪 Điểm mạnh</h4>
+          <ul>
+            ${strengths.map(strength => `<li>${strength}</li>`).join('')}
+          </ul>
+        </div>
+        
+        <div class="compatibility-section">
+          <h4>⚠️ Thách thức</h4>
+          <ul>
+            ${challenges.map(challenge => `<li>${challenge}</li>`).join('')}
+          </ul>
+        </div>
+        
+        <div class="compatibility-section">
+          <h4>💡 Lời khuyên</h4>
+          <ul>
+            ${advice.map(tip => `<li>${tip}</li>`).join('')}
+          </ul>
+        </div>
+      </div>
+      
+      <div class="detailed-compatibility">
+        <h4>Chi tiết tương thích</h4>
+        <div class="compatibility-grid">
+          <div class="compat-item">
+            <span class="compat-label">Đường đời:</span>
+            <span class="compat-score">${compatibility.lifePath.score}/100</span>
+            <span class="compat-type">${compatibility.lifePath.type}</span>
+          </div>
+          <div class="compat-item">
+            <span class="compat-label">Biểu đạt:</span>
+            <span class="compat-score">${compatibility.expression.score}/100</span>
+            <span class="compat-type">${compatibility.expression.type}</span>
+          </div>
+          <div class="compat-item">
+            <span class="compat-label">Tâm hồn:</span>
+            <span class="compat-score">${compatibility.soulUrge.score}/100</span>
+            <span class="compat-type">${compatibility.soulUrge.type}</span>
+          </div>
+          <div class="compat-item">
+            <span class="compat-label">Tính cách:</span>
+            <span class="compat-score">${compatibility.personality.score}/100</span>
+            <span class="compat-type">${compatibility.personality.type}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  resultsContainer.style.display = 'block';
+}
+
+/**
+ * Show advanced crystal information
+ */
+function showAdvancedFeatures(results) {
+  const advancedContainer = document.getElementById('advanced-features');
+  if (!advancedContainer) return;
+  
+  const crystalTab = renderCrystalTab(results.crystalInfo, results.lifePath.value);
+  const colorTab = renderColorTab(results.colorInfo, results.lifePath.value);
+  const careerTab = renderCareerTab(results.careerInfo, results.lifePath.value);
+  const forecastTab = renderForecastTab(results.advancedForecast);
+  const fengShuiTab = renderFengShuiTab(results.fengShuiNumber, results.directionalLuck);
+  
+  advancedContainer.innerHTML = `
+    <div class="advanced-tabs">
+      <div class="tab-buttons">
+        <button class="tab-btn active" data-tab="crystal">🔮 Crystal</button>
+        <button class="tab-btn" data-tab="color">🌈 Color</button>
+        <button class="tab-btn" data-tab="career">💼 Career</button>
+        <button class="tab-btn" data-tab="forecast">⏰ Forecast</button>
+        <button class="tab-btn" data-tab="fengshui">🏠 Feng Shui</button>
+      </div>
+      <div class="tab-content">
+        <div class="tab-panel active" id="crystal-panel">${crystalTab}</div>
+        <div class="tab-panel" id="color-panel">${colorTab}</div>
+        <div class="tab-panel" id="career-panel">${careerTab}</div>
+        <div class="tab-panel" id="forecast-panel">${forecastTab}</div>
+        <div class="tab-panel" id="fengshui-panel">${fengShuiTab}</div>
+      </div>
+    </div>
+  `;
+  
+  // Setup tab switching
+  setupAdvancedTabs();
+  advancedContainer.style.display = 'block';
+}
+
+/**
+ * Render crystal tab content
+ */
+function renderCrystalTab(crystalInfo, lifePathNumber) {
+  if (!crystalInfo.primary_crystals) return '<p>Không có thông tin crystal cho số này.</p>';
+  
+  return `
+    <div class="crystal-content">
+      <h3>🔮 Crystal Guidance cho Life Path ${lifePathNumber}</h3>
+      
+      <div class="crystal-section">
+        <h4>Primary Crystals</h4>
+        <div class="crystals-grid">
+          ${crystalInfo.primary_crystals.map(crystal => `
+            <div class="crystal-item">
+              <div class="crystal-name">${crystal.name}</div>
+              <div class="crystal-purpose">${crystal.purpose}</div>
+              <div class="crystal-properties">${crystal.properties}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      
+      <div class="crystal-section">
+        <h4>Chakra Alignment</h4>
+        <div class="chakra-info">
+          <strong>Main Chakra:</strong> ${crystalInfo.chakra_alignment.main_chakra}<br>
+          <strong>Supporting:</strong> ${crystalInfo.chakra_alignment.supporting_chakras.join(', ')}<br>
+          <strong>Balance:</strong> ${crystalInfo.chakra_alignment.balance_needed}
+        </div>
+      </div>
+      
+      <div class="crystal-section">
+        <h4>Meditation Guidance</h4>
+        <div class="meditation-guide">
+          <p><strong>Focus:</strong> ${crystalInfo.meditation_guidance.focus}</p>
+          <p><strong>Technique:</strong> ${crystalInfo.meditation_guidance.technique}</p>
+          <p><strong>Affirmation:</strong> "${crystalInfo.meditation_guidance.affirmation}"</p>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/**
+ * Render color tab content
+ */
+function renderColorTab(colorInfo, lifePathNumber) {
+  if (!colorInfo.primary_colors) return '<p>Không có thông tin color cho số này.</p>';
+  
+  return `
+    <div class="color-content">
+      <h3>🌈 Color Therapy cho Life Path ${lifePathNumber}</h3>
+      
+      <div class="color-section">
+        <h4>Primary Colors</h4>
+        <div class="colors-grid">
+          ${colorInfo.primary_colors.map(color => `
+            <div class="color-item" style="background: linear-gradient(135deg, ${color.hex} 0%, ${color.hex}AA 100%)">
+              <div class="color-name">${color.name}</div>
+              <div class="color-effect">${color.psychological_effect}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      
+      <div class="color-section">
+        <h4>Feng Shui Applications</h4>
+        <div class="fengshui-colors">
+          <p><strong>Home Direction:</strong> ${colorInfo.feng_shui.home_direction}</p>
+          <p><strong>Workplace:</strong> ${colorInfo.feng_shui.workplace_colors.join(', ')}</p>
+          <p><strong>Bedroom:</strong> ${colorInfo.feng_shui.bedroom_colors.join(', ')}</p>
+        </div>
+      </div>
+      
+      <div class="color-section">
+        <h4>Daily Color Tips</h4>
+        <ul class="color-tips">
+          ${colorInfo.daily_applications.map(tip => `<li>${tip}</li>`).join('')}
+        </ul>
+      </div>
+    </div>
+  `;
+}
+
+/**
+ * Render career tab content
+ */
+function renderCareerTab(careerInfo, lifePathNumber) {
+  if (!careerInfo.ideal_careers) return '<p>Không có thông tin career cho số này.</p>';
+  
+  return `
+    <div class="career-content">
+      <h3>💼 Career & Finance Guide cho Life Path ${lifePathNumber}</h3>
+      
+      <div class="career-section">
+        <h4>Ideal Careers</h4>
+        <div class="careers-list">
+          ${careerInfo.ideal_careers.map(career => `<span class="career-tag">${career}</span>`).join('')}
+        </div>
+      </div>
+      
+      <div class="career-section">
+        <h4>Business Types</h4>
+        <div class="business-list">
+          ${careerInfo.business_types.map(business => `<span class="business-tag">${business}</span>`).join('')}
+        </div>
+      </div>
+      
+      <div class="career-section">
+        <h4>Financial Profile</h4>
+        <div class="financial-profile">
+          <div class="finance-item">
+            <strong>Saving Tendency:</strong> ${careerInfo.money_management.saving_tendency}
+          </div>
+          <div class="finance-item">
+            <strong>Investment Style:</strong> ${careerInfo.money_management.investment_style}
+          </div>
+          <div class="finance-item">
+            <strong>Spending Pattern:</strong> ${careerInfo.money_management.spending_pattern}
+          </div>
+        </div>
+      </div>
+      
+      <div class="career-section">
+        <h4>Wealth Building Tips</h4>
+        <ul class="wealth-tips">
+          ${careerInfo.wealth_building_tips.map(tip => `<li>${tip}</li>`).join('')}
+        </ul>
+      </div>
+    </div>
+  `;
+}
+
+/**
+ * Render forecast tab content
+ */
+function renderForecastTab(forecast) {
+  if (!forecast) return '<p>Không có thông tin forecast.</p>';
+  
+  // Handle both structures - from calcAdvancedPersonalForecast or fallback
+  const currentYear = forecast.current_cycle?.personal_year || forecast.current_personal_year || 1;
+  const universalYear = forecast.universal_year || new Date().getFullYear();
+  const phase = forecast.current_cycle?.phase || forecast.life_phase || 'Analysis';
+  const biorhythms = forecast.biorhythms || { physical: 50, emotional: 50, intellectual: 50 };
+  
+  return `
+    <div class="forecast-content">
+      <h3>⏰ Advanced Personal Forecast</h3>
+      
+      <div class="forecast-section">
+        <h4>Current Cycle</h4>
+        <div class="cycle-info">
+          <div class="cycle-item">
+            <strong>Personal Year:</strong> ${currentYear}
+          </div>
+          <div class="cycle-item">
+            <strong>Universal Year:</strong> ${universalYear}
+          </div>
+          <div class="cycle-item">
+            <strong>Phase:</strong> ${phase}
+          </div>
+        </div>
+      </div>
+      
+      <div class="forecast-section">
+        <h4>Biorhythms Today</h4>
+        <div class="biorhythm-grid">
+          <div class="bio-item">
+            <div class="bio-label">Physical</div>
+            <div class="bio-value">${Math.round(biorhythms.physical)}%</div>
+            <div class="bio-bar">
+              <div class="bio-fill" style="width: ${Math.abs(biorhythms.physical)}%; background: ${biorhythms.physical > 0 ? '#4CAF50' : '#F44336'}"></div>
+            </div>
+          </div>
+          <div class="bio-item">
+            <div class="bio-label">Emotional</div>
+            <div class="bio-value">${Math.round(biorhythms.emotional)}%</div>
+            <div class="bio-bar">
+              <div class="bio-fill" style="width: ${Math.abs(biorhythms.emotional)}%; background: ${biorhythms.emotional > 0 ? '#2196F3' : '#FF9800'}"></div>
+            </div>
+          </div>
+          <div class="bio-item">
+            <div class="bio-label">Intellectual</div>
+            <div class="bio-value">${Math.round(biorhythms.intellectual)}%</div>
+            <div class="bio-bar">
+              <div class="bio-fill" style="width: ${Math.abs(biorhythms.intellectual)}%; background: ${biorhythms.intellectual > 0 ? '#9C27B0' : '#795548'}"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="forecast-section">
+        <h4>Yearly Forecast</h4>
+        <div class="yearly-forecast">
+          ${forecast.yearly_forecast ? forecast.yearly_forecast.map(yearData => `
+            <div class="year-item">
+              <strong>${yearData.year}:</strong> ${yearData.theme} (Personal Year ${yearData.personal_year})
+            </div>
+          `).join('') : '<p>Đang tính toán dự báo hàng năm...</p>'}
+        </div>
+      </div>
+    </div>
+  `;
+            </div>
+          </div>
+          <div class="bio-item">
+            <div class="bio-label">Emotional</div>
+            <div class="bio-value">${Math.round(forecast.biorhythms.emotional)}%</div>
+            <div class="bio-bar">
+              <div class="bio-fill" style="width: ${Math.abs(forecast.biorhythms.emotional)}%; background: ${forecast.biorhythms.emotional > 0 ? '#2196F3' : '#FF9800'}"></div>
+            </div>
+          </div>
+          <div class="bio-item">
+            <div class="bio-label">Intellectual</div>
+            <div class="bio-value">${Math.round(forecast.biorhythms.intellectual)}%</div>
+            <div class="bio-bar">
+              <div class="bio-fill" style="width: ${Math.abs(forecast.biorhythms.intellectual)}%; background: ${forecast.biorhythms.intellectual > 0 ? '#9C27B0' : '#795548'}"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="forecast-section">
+        <h4>Key Dates Ahead</h4>
+        <div class="key-dates">
+          ${forecast.key_dates?.map(date => `
+            <div class="date-item">
+              <span class="date">${date.date}</span>
+              <span class="event">${date.event}</span>
+            </div>
+          `).join('') || '<p>Đang tính toán...</p>'}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/**
+ * Render feng shui tab content
+ */
+function renderFengShuiTab(fengShuiNumber, directionalLuck) {
+  return `
+    <div class="fengshui-content">
+      <h3>🏠 Feng Shui & Cosmic Energy</h3>
+      
+      <div class="fengshui-section">
+        <h4>Personal Feng Shui Number: ${fengShuiNumber}</h4>
+        <div class="fengshui-info">
+          <p>Số phong thủy cá nhân của bạn ảnh hưởng đến cách bạn tương tác với không gian sống.</p>
+        </div>
+      </div>
+      
+      <div class="fengshui-section">
+        <h4>Directional Luck</h4>
+        <div class="directions-grid">
+          <div class="direction-item best">
+            <div class="direction-label">Best Direction</div>
+            <div class="direction-value">${directionalLuck.best}</div>
+          </div>
+          <div class="direction-item good">
+            <div class="direction-label">Good Directions</div>
+            <div class="direction-value">${directionalLuck.good.join(', ')}</div>
+          </div>
+          <div class="direction-item avoid">
+            <div class="direction-label">Avoid Direction</div>
+            <div class="direction-value">${directionalLuck.avoid}</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="fengshui-section">
+        <h4>Feng Shui Tips</h4>
+        <ul class="fengshui-tips">
+          <li>Đặt bàn làm việc hướng ${directionalLuck.best} để tăng productivity</li>
+          <li>Giường ngủ nên đặt đầu hướng một trong các hướng tốt</li>
+          <li>Tránh ngồi quay lưng về hướng ${directionalLuck.avoid}</li>
+          <li>Sử dụng gương hoặc cây xanh để deflect negative energy</li>
+        </ul>
+      </div>
+    </div>
+  `;
+}
+
+/**
+ * Setup advanced tabs functionality
+ */
+function setupAdvancedTabs() {
+  const tabButtons = document.querySelectorAll('.tab-btn');
+  const tabPanels = document.querySelectorAll('.tab-panel');
+  
+  tabButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const targetTab = button.dataset.tab;
+      
+      // Remove active class from all buttons and panels
+      tabButtons.forEach(btn => btn.classList.remove('active'));
+      tabPanels.forEach(panel => panel.classList.remove('active'));
+      
+      // Add active class to clicked button and corresponding panel
+      button.classList.add('active');
+      document.getElementById(`${targetTab}-panel`).classList.add('active');
+    });
+  });
+}
+
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}

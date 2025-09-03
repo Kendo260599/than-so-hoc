@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Form - HÀ UYÊN Numerology</title>
+    <link rel="stylesheet" href="src/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔮 DEBUG - HÀ UYÊN Numerology</h1>
+            <p class="subtitle">Test form submission</p>
+        </header>
+
+        <main>
+            <form id="numerologyForm" class="form-container">
+                <!-- Basic Information -->
+                <section class="form-section">
+                    <h2>📝 Thông tin cơ bản</h2>
+                    
+                    <div class="input-group">
+                        <label for="birthName">Họ tên khai sinh</label>
+                        <input type="text" id="birthName" placeholder="Nguyễn Văn A" required>
+                        <small>Họ tên ghi trong giấy khai sinh</small>
+                    </div>
+                    
+                    <div class="date-group">
+                        <h3>Ngày sinh</h3>
+                        <div class="date-inputs">
+                            <div class="input-group">
+                                <label for="day">Ngày</label>
+                                <input type="number" id="day" min="1" max="31" placeholder="01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="month">Tháng</label>
+                                <input type="number" id="month" min="1" max="12" placeholder="01" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="year">Năm</label>
+                                <input type="number" id="year" min="1900" max="2100" placeholder="1990" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Name source selection -->
+                    <div class="name-source">
+                        <label>
+                            <input type="radio" name="nameSource" value="birth" checked>
+                            Sử dụng tên khai sinh
+                        </label>
+                    </div>
+                </section>
+
+                <!-- Submit Button -->
+                <button type="submit" id="calculateBtn" class="calculate-btn">
+                    🔮 Tính các chỉ số
+                </button>
+            </form>
+        </main>
+    </div>
+
+    <script>
+        console.log('Debug script loaded');
+        
+        // Simple debug form handler
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded');
+            
+            const form = document.getElementById('numerologyForm');
+            console.log('Form found:', form);
+            
+            if (form) {
+                form.addEventListener('submit', function(event) {
+                    console.log('Form submit triggered');
+                    event.preventDefault();
+                    console.log('Default prevented');
+                    
+                    const birthName = document.getElementById('birthName').value;
+                    const day = document.getElementById('day').value;
+                    const month = document.getElementById('month').value;
+                    const year = document.getElementById('year').value;
+                    
+                    console.log('Form data:', { birthName, day, month, year });
+                    
+                    if (!birthName || !day || !month || !year) {
+                        alert('Vui lòng điền đầy đủ thông tin');
+                        return;
+                    }
+                    
+                    alert('Form submitted successfully! Check console for data.');
+                });
+            } else {
+                console.error('Form not found!');
+            }
+        });
+    </script>
+</body>
+</html>

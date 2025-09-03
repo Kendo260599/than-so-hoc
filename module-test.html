@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module Test</title>
+</head>
+<body>
+    <h1>Module Loading Test</h1>
+    <div id="output"></div>
+    
+    <script type="module">
+        try {
+            console.log('Starting module imports...');
+            
+            // Test utils import
+            const { digitSum } = await import('./src/utils.js');
+            console.log('✅ utils.js imported successfully');
+            console.log('digitSum test:', digitSum(123));
+            
+            // Test numerology import 
+            const { 
+                calcLifePath, 
+                calcExpression,
+                DEFAULT_OPTIONS 
+            } = await import('./src/numerology.js');
+            console.log('✅ numerology.js imported successfully');
+            
+            // Test ui import
+            const { readOptionsFromUI } = await import('./src/ui.js');
+            console.log('✅ ui.js imported successfully');
+            
+            // Test main import
+            await import('./src/main.js');
+            console.log('✅ main.js imported successfully');
+            
+            document.getElementById('output').innerHTML = `
+                <h2>✅ All modules loaded successfully!</h2>
+                <p>Check console for details.</p>
+            `;
+            
+        } catch (error) {
+            console.error('❌ Module import error:', error);
+            document.getElementById('output').innerHTML = `
+                <h2>❌ Module loading failed</h2>
+                <p>Error: ${error.message}</p>
+                <p>Check console for details.</p>
+            `;
+        }
+    </script>
+</body>
+</html>

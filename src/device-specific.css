@@ -1,0 +1,215 @@
+/* Device-Specific CSS Fixes */
+
+/* iOS Safari fixes */
+.ios-device input,
+.ios-device select,
+.ios-device textarea {
+    font-size: 16px !important; /* Prevent zoom on focus */
+    border-radius: 0; /* Remove default styling */
+    -webkit-appearance: none;
+}
+
+.ios-device .pyramid-position {
+    -webkit-transform: translateZ(0); /* Hardware acceleration */
+    transform: translateZ(0);
+}
+
+/* Android Chrome fixes */
+.android-device input,
+.android-device select {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.android-device .life-pyramid-container {
+    will-change: transform; /* Optimize animations */
+}
+
+/* Touch device optimizations */
+.touch-device .pyramid-position {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(139, 92, 246, 0.3);
+}
+
+.touch-device .calculate-btn {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(139, 92, 246, 0.3);
+}
+
+/* High DPI display fixes */
+@media (-webkit-min-device-pixel-ratio: 2) {
+    .pyramid-position {
+        border-width: 0.5px;
+    }
+}
+
+@media (-webkit-min-device-pixel-ratio: 3) {
+    .pyramid-position {
+        border-width: 0.33px;
+    }
+}
+
+/* Specific device breakpoints */
+
+/* iPhone SE, 5s */
+@media only screen and (device-width: 320px) and (device-height: 568px) {
+    .container {
+        padding: 0.5rem;
+    }
+    
+    .pyramid-position {
+        min-width: 280px;
+        font-size: 0.9rem;
+    }
+}
+
+/* iPhone 6, 7, 8 */
+@media only screen and (device-width: 375px) and (device-height: 667px) {
+    .pyramid-position {
+        min-width: 320px;
+    }
+}
+
+/* iPhone 6+, 7+, 8+ */
+@media only screen and (device-width: 414px) and (device-height: 736px) {
+    .pyramid-position {
+        min-width: 350px;
+    }
+}
+
+/* iPhone X, XS */
+@media only screen and (device-width: 375px) and (device-height: 812px) {
+    .container {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+}
+
+/* iPhone XR */
+@media only screen and (device-width: 414px) and (device-height: 896px) {
+    .container {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+}
+
+/* iPad */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    .pyramid-level {
+        gap: 1.5rem;
+    }
+    
+    .pyramid-position {
+        min-width: 140px;
+    }
+}
+
+/* Common mobile landscape */
+@media only screen and (max-height: 500px) and (orientation: landscape) {
+    .pyramid-structure {
+        gap: 0.5rem;
+    }
+    
+    .pyramid-position {
+        padding: 0.8rem;
+        margin: 0.25rem;
+    }
+    
+    .pyramid-title {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+}
+
+/* Very large screens */
+@media only screen and (min-width: 1440px) {
+    .pyramid-level.level-1 {
+        width: 800px;
+    }
+    
+    .pyramid-level.level-2 {
+        width: 600px;
+    }
+    
+    .pyramid-level.level-3 {
+        width: 400px;
+    }
+    
+    .pyramid-level.level-4 {
+        width: 250px;
+    }
+}
+
+/* 4K displays */
+@media only screen and (min-width: 2560px) {
+    .container {
+        max-width: 1600px;
+    }
+    
+    .pyramid-position {
+        min-width: 180px;
+        padding: 2rem;
+    }
+    
+    .position-number {
+        font-size: 4rem;
+    }
+}
+
+/* Print optimization */
+@media print {
+    * {
+        -webkit-print-color-adjust: exact !important;
+        color-adjust: exact !important;
+    }
+    
+    .life-pyramid-container {
+        page-break-inside: avoid;
+    }
+    
+    .pyramid-level {
+        page-break-inside: avoid;
+    }
+}
+
+/* Dark mode preference */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --pyramid-bg: rgba(15, 23, 42, 0.95);
+        --pyramid-border: rgba(139, 92, 246, 0.4);
+    }
+}
+
+/* Light mode preference */
+@media (prefers-color-scheme: light) {
+    :root {
+        --pyramid-bg: rgba(255, 255, 255, 0.95);
+        --pyramid-border: rgba(139, 92, 246, 0.6);
+    }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    .pyramid-position,
+    .calculate-btn {
+        transition: none !important;
+        animation: none !important;
+    }
+    
+    .number-glow {
+        animation: none !important;
+    }
+}
+
+/* High contrast preference */
+@media (prefers-contrast: high) {
+    .pyramid-position {
+        border-width: 3px;
+        border-color: #000 !important;
+    }
+    
+    .position-number {
+        color: #000 !important;
+        text-shadow: none !important;
+    }
+}

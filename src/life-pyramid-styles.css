@@ -189,29 +189,47 @@
 /* Responsive cho mobile */
 @media (max-width: 768px) {
     .life-pyramid-container {
-        padding: 1.5rem;
+        padding: 1rem;
+        margin: 1rem 0;
     }
     
     .pyramid-title {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .pyramid-structure {
+        gap: 1rem;
     }
     
     .pyramid-level {
         flex-direction: column;
         align-items: center;
-        gap: 1rem;
-    }
-    
-    .pyramid-level.level-1,
-    .pyramid-level.level-2,
-    .pyramid-level.level-3,
-    .pyramid-level.level-4 {
-        width: 100%;
+        gap: 0.75rem;
+        width: 100% !important;
     }
     
     .pyramid-position {
-        min-width: 250px;
-        max-width: 280px;
+        min-width: 280px;
+        max-width: 320px;
+        width: 90%;
+        padding: 1rem;
+    }
+    
+    .position-number {
+        font-size: 2.5rem;
+    }
+    
+    .position-age {
+        font-size: 0.9rem;
+    }
+    
+    .position-meaning {
+        font-size: 0.8rem;
+    }
+    
+    .position-energy {
+        font-size: 0.7rem;
     }
     
     .level-label {
@@ -220,6 +238,81 @@
         writing-mode: horizontal-tb;
         text-align: center;
         margin-bottom: 1rem;
+        font-size: 1rem;
+    }
+    
+    /* Modal responsive */
+    .position-details {
+        width: 95%;
+        max-width: 95%;
+        max-height: 90vh;
+        padding: 1.5rem;
+    }
+    
+    .details-title {
+        font-size: 1.4rem;
+    }
+    
+    .advice-title {
+        font-size: 1.2rem;
+    }
+}
+
+/* Responsive cho tablet */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .life-pyramid-container {
+        padding: 2rem;
+    }
+    
+    .pyramid-title {
+        font-size: 2rem;
+    }
+    
+    .pyramid-level.level-1 {
+        width: 600px;
+    }
+    
+    .pyramid-level.level-2 {
+        width: 450px;
+    }
+    
+    .pyramid-level.level-3 {
+        width: 300px;
+    }
+    
+    .pyramid-level.level-4 {
+        width: 180px;
+    }
+    
+    .pyramid-position {
+        min-width: 100px;
+        padding: 1.2rem;
+    }
+}
+
+/* Extra small mobile */
+@media (max-width: 480px) {
+    .pyramid-title {
+        font-size: 1.3rem;
+    }
+    
+    .pyramid-position {
+        min-width: 260px;
+        max-width: 280px;
+        padding: 0.8rem;
+    }
+    
+    .position-number {
+        font-size: 2rem;
+    }
+    
+    .position-details {
+        width: 98%;
+        padding: 1rem;
+    }
+    
+    .details-title {
+        font-size: 1.2rem;
     }
 }
 

@@ -6,38 +6,108 @@
     <title>HÀ UYÊN Numerology Calculator</title>
     <link rel="stylesheet" href="src/styles.css">
     <link rel="stylesheet" href="src/feng-shui-styles.css">
+    
+    <!-- Enhanced UI/UX CSS System -->
+    <link rel="stylesheet" href="src/enhanced-ui.css">
+    <link rel="stylesheet" href="src/enhanced-navigation.css">
+    <link rel="stylesheet" href="src/enhanced-forms.css">
+    <link rel="stylesheet" href="src/enhanced-animations.css">
+    <link rel="stylesheet" href="src/enhanced-content.css">
+    <link rel="stylesheet" href="src/enhanced-accessibility.css">
+    <link rel="stylesheet" href="src/mobile-enhancements.css">
+    
     <meta name="description" content="Ứng dụng tính toán thần số học với nhiều trường phái và phương pháp khác nhau">
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>🔮 HÀ UYÊN Numerology</h1>
-            <p class="subtitle">Khám phá bản thân qua các con số với nhiều trường phái tính toán</p>
+        <!-- Skip Link for Accessibility -->
+        <a href="#main-content" class="skip-link">Bỏ qua đến nội dung chính</a>
+        
+        <!-- Enhanced Header with Theme Toggle -->
+        <header class="enhanced-header">
+            <div class="header-content">
+                <div class="header-brand">
+                    <h1>🔮 HÀ UYÊN Numerology</h1>
+                    <p class="subtitle">Khám phá bản thân qua các con số với nhiều trường phái tính toán</p>
+                </div>
+                
+                <div class="header-actions">
+                    <button class="theme-toggle" id="themeToggle" aria-label="Chuyển đổi chế độ tối/sáng">
+                        <span class="theme-icon">🌙</span>
+                    </button>
+                    
+                    <button class="nav-menu-toggle" id="navMenuToggle" aria-label="Menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Progress Steps -->
+            <div class="nav-progress">
+                <div class="progress-steps">
+                    <div class="progress-step active" data-step="1">
+                        <div class="step-circle">1</div>
+                        <span class="step-label">Thông tin</span>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="progress-step" data-step="2">
+                        <div class="step-circle">2</div>
+                        <span class="step-label">Phân tích</span>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="progress-step" data-step="3">
+                        <div class="step-circle">3</div>
+                        <span class="step-label">Kết quả</span>
+                    </div>
+                </div>
+            </div>
         </header>
+        
+        <!-- Floating Menu -->
+        <div class="floating-menu" id="floatingMenu">
+            <button class="floating-menu-item" data-module="crystal">💎 Pha lê</button>
+            <button class="floating-menu-item" data-module="color">🎨 Màu sắc</button>
+            <button class="floating-menu-item" data-module="career">💼 Sự nghiệp</button>
+            <button class="floating-menu-item" data-module="dream">💭 Giấc mơ</button>
+            <button class="floating-menu-item" data-module="feng-shui">🏮 Phong thủy</button>
+            <button class="floating-menu-item" data-module="advanced">📊 Dự báo</button>
+        </div>
 
-        <main>
-            <form id="numerologyForm" class="form-container">
+        <main id="main-content">
+            <form id="numerologyForm" class="enhanced-form">
                 <!-- Basic Information -->
                 <section class="form-section">
                     <h2>📝 Thông tin cơ bản</h2>
                     
-                    <div class="input-group">
+                    <div class="form-group floating-label">
+                        <input type="text" id="birthName" name="birthName" class="form-control" placeholder=" " required>
                         <label for="birthName">Họ tên khai sinh</label>
-                        <input type="text" id="birthName" placeholder="Nguyễn Văn A" required>
-                        <small>Họ tên ghi trong giấy khai sinh</small>
+                        <div class="form-validation">
+                            <span class="validation-message"></span>
+                        </div>
+                        <small class="form-help">Họ tên ghi trong giấy khai sinh</small>
                     </div>
                     
-                    <div class="input-group">
+                    <div class="form-group floating-label">
+                        <input type="text" id="currentName" name="currentName" class="form-control" placeholder=" ">
                         <label for="currentName">Họ tên hiện tại</label>
-                        <input type="text" id="currentName" placeholder="Nếu khác với tên khai sinh">
-                        <small>Tên đang sử dụng hiện tại (nếu có)</small>
+                        <div class="form-validation">
+                            <span class="validation-message"></span>
+                        </div>
+                        <small class="form-help">Tên đang sử dụng hiện tại (nếu có)</small>
                     </div>
                     
                     <div class="date-group">
                         <h3>Ngày sinh</h3>
                         <div class="date-inputs">
-                            <div class="input-group">
+                            <div class="form-group floating-label">
+                                <input type="number" id="day" name="day" class="form-control" min="1" max="31" placeholder=" " required>
                                 <label for="day">Ngày</label>
+                                <div class="form-validation">
+                                    <span class="validation-message"></span>
+                                </div>
                                 <input type="number" id="day" min="1" max="31" placeholder="01" required>
                             </div>
                             <div class="input-group">
@@ -308,6 +378,8 @@
         </footer>
     </div>
 
+    <!-- Enhanced UI/UX System -->
+    <script src="src/enhanced-ui-system.js"></script>
     <script type="module" src="src/main.js"></script>
 </body>
 </html>

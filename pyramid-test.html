@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Kim Tự Tháp</title>
+    <style>
+        body {
+            background: #1a1a2e;
+            color: white;
+            font-family: Arial, sans-serif;
+            padding: 2rem;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        input {
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            border: 1px solid #333;
+            background: #2a2a3e;
+            color: white;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 5px;
+            border: none;
+            background: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        .pyramid-result {
+            margin-top: 2rem;
+            background: #2a2a3e;
+            padding: 2rem;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🔮 Test Kim Tự Tháp Thần Số Học</h1>
+        
+        <div>
+            <input type="date" id="testBirthDate" value="1990-05-15">
+            <button onclick="testCalculation()">Tính Kim Tự Tháp</button>
+        </div>
+        
+        <div id="result" class="pyramid-result" style="display: none;">
+            <h2>Kết Quả:</h2>
+            <pre id="pyramidData"></pre>
+        </div>
+    </div>
+
+    <script src="src/life-pyramid-simple.js"></script>
+    <script>
+        async function testCalculation() {
+            console.log('Bắt đầu test...');
+            
+            try {
+                const birthDate = new Date(document.getElementById('testBirthDate').value);
+                console.log('Ngày sinh:', birthDate);
+                
+                const calculator = new LifePyramidCalculator();
+                console.log('Calculator created:', calculator);
+                
+                const pyramid = await calculator.calculateLifePyramid(birthDate);
+                console.log('Pyramid calculated:', pyramid);
+                
+                document.getElementById('pyramidData').textContent = JSON.stringify(pyramid, null, 2);
+                document.getElementById('result').style.display = 'block';
+                
+                console.log('Test thành công!');
+                
+            } catch (error) {
+                console.error('Lỗi trong test:', error);
+                alert('Lỗi: ' + error.message);
+            }
+        }
+        
+        // Test ngay khi load
+        window.addEventListener('load', () => {
+            console.log('Page loaded, testing...');
+            setTimeout(testCalculation, 1000);
+        });
+    </script>
+</body>
+</html>

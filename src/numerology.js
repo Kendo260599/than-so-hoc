@@ -2289,4 +2289,4 @@ function getDayOpportunities(personalDay) {
  * @param {Date} currentDate - Current date (optional)
  * @param {object} options - Calculation options
  * @returns {object} Life Path Periods analysis
- */
+ */

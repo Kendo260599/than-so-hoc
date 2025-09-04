@@ -91,7 +91,7 @@ class NumerologyEnhancedUI {
         // Hide all advanced sections first
         const sections = document.querySelectorAll('.advanced-section, .enhanced-section');
         sections.forEach(section => {
-            section.style.display = 'none';
+            section.classList.add('section-hidden');
         });
 
         // Show the requested module
@@ -108,7 +108,7 @@ class NumerologyEnhancedUI {
         const targetElement = document.getElementById(targetId);
         
         if (targetElement) {
-            targetElement.style.display = 'block';
+            targetElement.classList.remove('section-hidden');
             targetElement.scrollIntoView({ behavior: 'smooth' });
             
             // Add entrance animation

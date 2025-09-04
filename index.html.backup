@@ -1,34 +1,50 @@
 <!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
+<html lang="v        <!-- Enhanced Header with Theme Toggle -->
+        <header class="cosmic-header">
+            <div class="header-enhanced">
+                <h1 class="cosmic-title">🔮 HÀ UYÊN Numerology</h1>
+                <p class="cosmic-subtitle">Khám phá bản thân qua các con số với nhiều trường phái tính toán</p>
+                
+                <!-- Theme Toggle Button -->
+                <button class="theme-toggle cosmic-button" id="themeToggle" aria-label="Chuyển đổi chế độ tối/sáng">
+                    <span class="theme-icon">🌙</span>
+                </button>
+            </div>
+        </header>
+
+        <main id="main-content">
+            <form id="numerologyForm" class="form-container cosmic-form enhanced-form-compat">
+                <!-- Basic Information -->
+                <section class="form-section cosmic-card">
+                    <h2 class="cosmic-section-title">📝 Thông tin cơ bản</h2>meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HÀ UYÊN Numerology Calculator</title>
     <link rel="stylesheet" href="src/styles.css">
     <link rel="stylesheet" href="src/feng-shui-styles.css">
-    <link rel="stylesheet" href="src/life-pyramid-styles.css">
-    <link rel="stylesheet" href="src/pyramid-integration.css">
     
-    <!-- Enhanced UI/UX CSS System - Load after base styles -->
+    <!-- Google Fonts for Cosmic Theme -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Enhanced UI/UX CSS System -->
     <link rel="stylesheet" href="src/enhanced-ui.css">
-    <!-- Temporarily comment out other enhanced CSS to avoid conflicts
-    <link rel="stylesheet" href="src/enhanced-navigation.css">
-    <link rel="stylesheet" href="src/enhanced-forms.css">
-    <link rel="stylesheet" href="src/enhanced-animations.css">
-    <link rel="stylesheet" href="src/enhanced-content.css">
-    <link rel="stylesheet" href="src/enhanced-accessibility.css">
-    <link rel="stylesheet" href="src/mobile-enhancements.css">
-    -->
+    <!-- Cosmic Theme CSS -->
+    <link rel="stylesheet" href="src/cosmic-theme.css">
     
     <meta name="description" content="Ứng dụng tính toán thần số học với nhiều trường phái và phương pháp khác nhau">
 </head>
-<body>
-    <div class="container">
+<body class="cosmic-body">
+    <!-- Cosmic Background Elements -->
+    <div class="starfield-background" id="starfield"></div>
+    <div class="cosmic-constellation" id="constellation"></div>
+    
+    <div class="container cosmic-container">
         <!-- Skip Link for Accessibility -->
         <a href="#main-content" class="skip-link">Bỏ qua đến nội dung chính</a>
         
         <!-- Enhanced Header with Theme Toggle -->
-        <header>
+        <header class="cosmic-header">
             <div class="header-enhanced">
                 <h1>🔮 HÀ UYÊN Numerology</h1>
                 <p class="subtitle">Khám phá bản thân qua các con số với nhiều trường phái tính toán</p>
@@ -178,17 +194,6 @@
             <!-- Results Section -->
             <section id="results" class="results-section section-hidden">
                 <!-- Results will be inserted here by JavaScript -->
-            </section>
-
-            <!-- Life Pyramid Section -->
-            <section id="lifePyramidContainer" class="life-pyramid-section section-hidden">
-                <div class="pyramid-header">
-                    <h3>🔮 Kim Tự Tháp Cuộc Đời</h3>
-                    <p>Khám phá bản đồ cuộc đời của bạn qua thần số học cổ đại</p>
-                </div>
-                <div id="lifePyramidDisplay">
-                    <!-- Life pyramid will be inserted here by JavaScript -->
-                </div>
             </section>
 
             <!-- Pinnacles & Challenges Section -->
@@ -346,8 +351,6 @@
 
     <!-- Simple Enhanced UI System -->
     <script src="src/simple-enhanced-ui.js"></script>
-    <script src="src/life-pyramid-simple.js"></script>
-    <script src="src/life-pyramid-visualizer.js"></script>
     <script type="module" src="src/main.js"></script>
 </body>
 </html>

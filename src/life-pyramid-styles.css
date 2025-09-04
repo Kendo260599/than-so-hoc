@@ -1,0 +1,407 @@
+/* Life Pyramid Visualization - Kim Tự Tháp Thần Số Học */
+
+.life-pyramid-container {
+    background: var(--cosmic-bg);
+    padding: 3rem;
+    border-radius: 25px;
+    position: relative;
+    overflow: hidden;
+    margin: 2rem 0;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+}
+
+.life-pyramid-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.pyramid-title {
+    text-align: center;
+    font-family: 'Cinzel', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: var(--stardust-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 2rem;
+    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.6));
+}
+
+.pyramid-structure {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    position: relative;
+    z-index: 2;
+}
+
+/* Tầng của kim tự tháp */
+.pyramid-level {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    width: 100%;
+    position: relative;
+}
+
+/* Tầng 4 - Đỉnh */
+.pyramid-level.level-4 {
+    width: 200px;
+}
+
+/* Tầng 3 */
+.pyramid-level.level-3 {
+    width: 300px;
+}
+
+/* Tầng 2 */
+.pyramid-level.level-2 {
+    width: 500px;
+}
+
+/* Tầng 1 - Cơ sở */
+.pyramid-level.level-1 {
+    width: 700px;
+}
+
+/* Các vị trí số trong kim tự tháp */
+.pyramid-position {
+    background: rgba(255, 255, 255, 0.05);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border: 2px solid rgba(255, 215, 0, 0.4);
+    border-radius: 20px;
+    padding: 1.5rem;
+    text-align: center;
+    position: relative;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    min-width: 120px;
+    cursor: pointer;
+}
+
+.pyramid-position:hover {
+    transform: translateY(-10px) scale(1.05);
+    border-color: var(--golden-ratio);
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.3),
+        0 0 30px rgba(255, 215, 0, 0.5);
+}
+
+/* Số chính trong vị trí */
+.position-number {
+    font-family: 'Cinzel', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    background: var(--stardust-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8));
+    margin-bottom: 0.5rem;
+    animation: number-glow 3s ease-in-out infinite;
+}
+
+@keyframes number-glow {
+    0%, 100% { filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8)); }
+    50% { filter: drop-shadow(0 0 25px rgba(255, 215, 0, 1)); }
+}
+
+/* Tuổi và năm */
+.position-age {
+    font-size: 1rem;
+    color: var(--ethereal-cyan);
+    font-weight: 600;
+    margin: 0.5rem 0;
+}
+
+.position-year {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 1rem;
+}
+
+/* Ý nghĩa */
+.position-meaning {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+}
+
+/* Năng lượng */
+.position-energy {
+    font-size: 0.75rem;
+    color: var(--astral-pink);
+    font-style: italic;
+}
+
+/* Đường kết nối giữa các tầng */
+.pyramid-connections {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.connection-line {
+    position: absolute;
+    background: linear-gradient(45deg, 
+        rgba(255, 215, 0, 0.3), 
+        rgba(255, 215, 0, 0.1), 
+        rgba(255, 215, 0, 0.3));
+    height: 2px;
+    transform-origin: left center;
+    opacity: 0.6;
+    animation: energy-flow 4s ease-in-out infinite;
+}
+
+@keyframes energy-flow {
+    0%, 100% { opacity: 0.6; box-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
+    50% { opacity: 1; box-shadow: 0 0 20px rgba(255, 215, 0, 0.8); }
+}
+
+/* Nhãn tầng */
+.level-label {
+    position: absolute;
+    left: -150px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--golden-ratio);
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+}
+
+/* Responsive cho mobile */
+@media (max-width: 768px) {
+    .life-pyramid-container {
+        padding: 1.5rem;
+    }
+    
+    .pyramid-title {
+        font-size: 1.8rem;
+    }
+    
+    .pyramid-level {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+    
+    .pyramid-level.level-1,
+    .pyramid-level.level-2,
+    .pyramid-level.level-3,
+    .pyramid-level.level-4 {
+        width: 100%;
+    }
+    
+    .pyramid-position {
+        min-width: 250px;
+        max-width: 280px;
+    }
+    
+    .level-label {
+        position: relative;
+        left: 0;
+        writing-mode: horizontal-tb;
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+}
+
+/* Chi tiết vị trí khi click */
+.position-details {
+    background: rgba(0, 0, 0, 0.9);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border: 2px solid var(--golden-ratio);
+    border-radius: 20px;
+    padding: 2rem;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    animation: modal-appear 0.3s ease;
+}
+
+@keyframes modal-appear {
+    from { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+    to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+.details-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+}
+
+.details-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: var(--stardust-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.details-traits {
+    margin: 1.5rem 0;
+}
+
+.traits-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1rem 0;
+}
+
+.trait-tag {
+    background: var(--mystic-purple);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.challenges-list {
+    margin-top: 1rem;
+}
+
+.challenge-item {
+    color: var(--astral-pink);
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+}
+
+.details-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: 2px solid var(--golden-ratio);
+    color: var(--golden-ratio);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.details-close:hover {
+    background: var(--golden-ratio);
+    color: black;
+    transform: scale(1.1);
+}
+
+/* Animation cho pyramind loading */
+.pyramid-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+}
+
+.loading-pyramid {
+    width: 60px;
+    height: 60px;
+    border: 3px solid rgba(255, 215, 0, 0.3);
+    border-top: 3px solid var(--golden-ratio);
+    border-radius: 50%;
+    animation: pyramid-spin 1s linear infinite;
+}
+
+@keyframes pyramid-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Current phase highlight */
+.position-current {
+    border-color: var(--golden-ratio) !important;
+    background: rgba(255, 215, 0, 0.1) !important;
+    animation: current-phase-glow 2s ease-in-out infinite;
+}
+
+@keyframes current-phase-glow {
+    0%, 100% { 
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    }
+    50% { 
+        box-shadow: 0 0 40px rgba(255, 215, 0, 0.8);
+    }
+}
+
+/* Advice section */
+.pyramid-advice {
+    background: rgba(139, 92, 246, 0.1);
+    border: 2px solid rgba(139, 92, 246, 0.3);
+    border-radius: 20px;
+    padding: 2rem;
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.advice-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    color: var(--mystic-violet);
+    margin-bottom: 1rem;
+}
+
+.advice-text {
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.life-lessons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.lesson-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 15px;
+    padding: 1rem;
+    text-align: left;
+}
+
+.lesson-text {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    line-height: 1.4;
+}

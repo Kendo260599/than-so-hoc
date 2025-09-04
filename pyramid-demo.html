@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kim Tự Tháp Cuộc Đời - Thần Số Học</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="src/styles.css">
+    <link rel="stylesheet" href="src/enhanced-ui.css">
+    <link rel="stylesheet" href="src/life-pyramid-styles.css">
+    
+    <style>
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .demo-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .demo-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            background: var(--stardust-gradient);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.6));
+        }
+        
+        .demo-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+        }
+        
+        .input-section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 25px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+        
+        .date-input-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .date-label {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            color: var(--golden-ratio);
+            margin-bottom: 0.5rem;
+        }
+        
+        .date-input {
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(255, 215, 0, 0.4);
+            border-radius: 15px;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            color: white;
+            text-align: center;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            min-width: 200px;
+        }
+        
+        .date-input:focus {
+            outline: none;
+            border-color: var(--golden-ratio);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+        }
+        
+        .calculate-btn {
+            background: var(--cosmic-gradient);
+            border: 2px solid var(--golden-ratio);
+            border-radius: 25px;
+            padding: 1rem 3rem;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            font-family: 'Cinzel', serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .calculate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+            filter: brightness(1.2);
+        }
+        
+        .calculate-btn:active {
+            transform: translateY(-1px);
+        }
+        
+        .example-dates {
+            margin-top: 2rem;
+            text-align: center;
+        }
+        
+        .example-title {
+            color: var(--ethereal-cyan);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .example-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        .example-btn {
+            background: rgba(139, 92, 246, 0.2);
+            border: 1px solid rgba(139, 92, 246, 0.4);
+            border-radius: 15px;
+            padding: 0.5rem 1rem;
+            color: var(--mystic-violet);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .example-btn:hover {
+            background: rgba(139, 92, 246, 0.4);
+            transform: scale(1.05);
+        }
+        
+        .pyramid-display {
+            min-height: 400px;
+        }
+        
+        .controls-section {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .controls-hidden {
+            display: none !important;
+        }
+        
+        .control-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 15px;
+            padding: 0.75rem 1.5rem;
+            color: white;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .control-btn:hover {
+            border-color: var(--golden-ratio);
+            background: rgba(255, 215, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .interpretation-guide {
+            background: rgba(139, 92, 246, 0.1);
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            border-radius: 25px;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .guide-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            color: var(--mystic-violet);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .guide-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .guide-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+        }
+        
+        .guide-section h4 {
+            color: var(--golden-ratio);
+            margin-bottom: 1rem;
+        }
+        
+        .guide-section ul {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+        
+        .controls-hidden {
+            display: none;
+        }
+        
+        .pyramid-placeholder {
+            text-align: center;
+            padding: 4rem;
+            color: rgba(255,255,255,0.6);
+        }
+        
+        .placeholder-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.3;
+        }
+        
+        .placeholder-text {
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .demo-title {
+                font-size: 2rem;
+            }
+            
+            .date-input-group {
+                flex-direction: column;
+            }
+            
+            .controls-section {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .control-btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+        
+        /* Animation cho xuất hiện kim tự tháp */
+        .pyramid-appear {
+            animation: pyramid-fade-in 1s ease-out;
+        }
+        
+        @keyframes pyramid-fade-in {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Tooltip cho hướng dẫn */
+        .tooltip {
+            position: relative;
+            cursor: help;
+        }
+        
+        .tooltip::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .tooltip:hover::after {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="cosmic-theme">
+    <div class="demo-container">
+        <header class="demo-header">
+            <h1 class="demo-title">
+                <i class="fas fa-eye-of-providence"></i>
+                Kim Tự Tháp Cuộc Đời
+            </h1>
+            <p class="demo-subtitle">
+                Khám phá bản đồ cuộc đời của bạn qua thần số học cổ đại
+            </p>
+        </header>
+
+        <section class="input-section">
+            <div class="date-input-group">
+                <label class="date-label">
+                    <i class="fas fa-calendar-alt"></i>
+                    Nhập ngày sinh của bạn
+                </label>
+                <input type="date" 
+                       id="birthDateInput" 
+                       class="date-input"
+                       title="Chọn ngày sinh của bạn"
+                       max="2024-12-31">
+                <button id="calculateBtn" class="calculate-btn">
+                    <i class="fas fa-magic"></i>
+                    Tính Kim Tự Tháp
+                </button>
+            </div>
+            
+            <div class="example-dates">
+                <p class="example-title">Hoặc thử với các ví dụ:</p>
+                <div class="example-buttons">
+                    <button class="example-btn" data-date="1990-05-15">15/05/1990</button>
+                    <button class="example-btn" data-date="1985-11-23">23/11/1985</button>
+                    <button class="example-btn" data-date="1995-07-08">08/07/1995</button>
+                    <button class="example-btn" data-date="1988-12-03">03/12/1988</button>
+                </div>
+            </div>
+        </section>
+
+        <div class="controls-section controls-hidden" id="controlsSection">
+            <button class="control-btn" id="exportImageBtn">
+                <i class="fas fa-image"></i>
+                Xuất Hình Ảnh
+            </button>
+            <button class="control-btn" id="generateReportBtn">
+                <i class="fas fa-file-pdf"></i>
+                Tạo Báo Cáo PDF
+            </button>
+            <button class="control-btn tooltip" id="shareBtn" data-tooltip="Chia sẻ kim tự tháp">
+                <i class="fas fa-share-alt"></i>
+                Chia Sẻ
+            </button>
+        </div>
+
+        <main class="pyramid-display" id="pyramidDisplay">
+            <div class="pyramid-placeholder">
+                <i class="fas fa-arrow-up placeholder-icon"></i>
+                <p class="placeholder-text">Nhập ngày sinh để khám phá kim tự tháp cuộc đời của bạn</p>
+            </div>
+        </main>
+
+        <section class="interpretation-guide">
+            <h3 class="guide-title">
+                <i class="fas fa-book-open"></i>
+                Hướng Dẫn Giải Thích
+            </h3>
+            <div class="guide-content">
+                <div class="guide-section">
+                    <h4><i class="fas fa-layer-group"></i> Các Tầng Kim Tự Tháp</h4>
+                    <ul>
+                        <li><strong>Tầng 1 (Khởi đầu):</strong> Tuổi 0-27, giai đoạn học hỏi và hình thành</li>
+                        <li><strong>Tầng 2 (Trưởng thành):</strong> Tuổi 28-36, thời kỳ phát triển sự nghiệp</li>
+                        <li><strong>Tầng 3 (Phát triển):</strong> Tuổi 37-45, giai đoạn thành công và ổn định</li>
+                        <li><strong>Tầng 4 (Thành tựu):</strong> Tuổi 46+, thời kỳ đỉnh cao và truyền đạt</li>
+                    </ul>
+                </div>
+                
+                <div class="guide-section">
+                    <h4><i class="fas fa-star"></i> Ý Nghĩa Các Số</h4>
+                    <ul>
+                        <li><strong>Số 1:</strong> Lãnh đạo, khởi đầu, độc lập</li>
+                        <li><strong>Số 2:</strong> Hợp tác, cân bằng, quan hệ</li>
+                        <li><strong>Số 3:</strong> Sáng tạo, giao tiếp, nghệ thuật</li>
+                        <li><strong>Số 4:</strong> Ổn định, thực tế, xây dựng</li>
+                        <li><strong>Số 5:</strong> Tự do, phiêu lưu, thay đổi</li>
+                        <li><strong>Số 6:</strong> Yêu thương, chăm sóc, gia đình</li>
+                        <li><strong>Số 7:</strong> Tâm linh, nghiên cứu, trí tuệ</li>
+                        <li><strong>Số 8:</strong> Vật chất, thành công, quyền lực</li>
+                        <li><strong>Số 9:</strong> Nhân đạo, hoàn thiện, phục vụ</li>
+                    </ul>
+                </div>
+                
+                <div class="guide-section">
+                    <h4><i class="fas fa-lightbulb"></i> Cách Sử Dụng</h4>
+                    <ul>
+                        <li>Click vào từng vị trí để xem chi tiết</li>
+                        <li>Vị trí sáng lên là giai đoạn hiện tại của bạn</li>
+                        <li>Theo dõi dòng chảy năng lượng qua các tầng</li>
+                        <li>Đọc lời khuyên để hiểu rõ hơn về cuộc đời</li>
+                        <li>Xuất báo cáo để lưu trữ và nghiên cứu</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Scripts -->
+    <script src="src/numerology.js"></script>
+    <script src="src/life-pyramid-simple.js"></script>
+    <script src="src/life-pyramid-visualizer.js"></script>
+    
+    <!-- Optional: HTML2Canvas cho export ảnh -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <!-- Optional: jsPDF cho export PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <script>
+        // Khởi tạo visualizer
+        const pyramidVisualizer = new LifePyramidVisualizer('pyramidDisplay');
+        
+        // Elements
+        const birthDateInput = document.getElementById('birthDateInput');
+        const calculateBtn = document.getElementById('calculateBtn');
+        const controlsSection = document.getElementById('controlsSection');
+        const exportImageBtn = document.getElementById('exportImageBtn');
+        const generateReportBtn = document.getElementById('generateReportBtn');
+        const shareBtn = document.getElementById('shareBtn');
+        
+        // Event listeners
+        calculateBtn.addEventListener('click', calculatePyramid);
+        birthDateInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') calculatePyramid();
+        });
+        
+        // Example date buttons
+        document.querySelectorAll('.example-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const date = e.target.dataset.date;
+                birthDateInput.value = date;
+                calculatePyramid();
+            });
+        });
+        
+        // Control buttons
+        exportImageBtn.addEventListener('click', () => {
+            pyramidVisualizer.exportPyramidImage();
+        });
+        
+        generateReportBtn.addEventListener('click', () => {
+            const birthDate = new Date(birthDateInput.value);
+            pyramidVisualizer.generatePyramidReport(birthDate);
+        });
+        
+        shareBtn.addEventListener('click', () => {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Kim Tự Tháp Cuộc Đời',
+                    text: 'Khám phá kim tự tháp cuộc đời qua thần số học!',
+                    url: window.location.href
+                });
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                alert('Đã copy link vào clipboard!');
+            }
+        });
+        
+        // Main calculation function
+        async function calculatePyramid() {
+            const birthDate = birthDateInput.value;
+            
+            if (!birthDate) {
+                alert('Vui lòng nhập ngày sinh!');
+                return;
+            }
+            
+            try {
+                await pyramidVisualizer.displayPyramid(new Date(birthDate));
+                controlsSection.classList.remove('controls-hidden');
+                
+                // Add animation class
+                document.getElementById('pyramidDisplay').classList.add('pyramid-appear');
+                
+                // Smooth scroll to pyramid
+                document.getElementById('pyramidDisplay').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                
+            } catch (error) {
+                console.error('Lỗi tính toán:', error);
+                alert('Có lỗi xảy ra khi tính toán kim tự tháp. Vui lòng thử lại!');
+            }
+        }
+        
+        // Set default date to today
+        document.addEventListener('DOMContentLoaded', () => {
+            const today = new Date();
+            const thirtyYearsAgo = new Date(today.getFullYear() - 30, today.getMonth(), today.getDate());
+            birthDateInput.value = thirtyYearsAgo.toISOString().split('T')[0];
+        });
+        
+        // Add some cosmic effects
+        function addCosmicEffects() {
+            // Create floating particles
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'cosmic-particle';
+                particle.style.cssText = `
+                    position: fixed;
+                    width: 3px;
+                    height: 3px;
+                    background: rgba(255, 215, 0, 0.6);
+                    border-radius: 50%;
+                    pointer-events: none;
+                    z-index: -1;
+                    animation: float ${5 + Math.random() * 10}s linear infinite;
+                    left: ${Math.random() * 100}vw;
+                    top: ${Math.random() * 100}vh;
+                `;
+                document.body.appendChild(particle);
+            }
+        }
+        
+        // Add cosmic effects when page loads
+        setTimeout(addCosmicEffects, 1000);
+    </script>
+    
+    <style>
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</body>
+</html>

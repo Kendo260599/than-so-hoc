@@ -1,0 +1,59 @@
+/* Life Pyramid Section Integration */
+.life-pyramid-section {
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    margin: var(--spacing-xl) 0;
+    border: 1px solid var(--border-color);
+}
+
+.pyramid-header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.pyramid-header h3 {
+    color: var(--accent-primary);
+    font-size: 1.8rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.pyramid-header p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}
+
+/* Override cosmic theme for integration */
+.life-pyramid-section .life-pyramid-container {
+    background: rgba(139, 92, 246, 0.1) !important;
+    border: 2px solid rgba(139, 92, 246, 0.3) !important;
+}
+
+.life-pyramid-section .pyramid-title {
+    color: var(--accent-primary) !important;
+}
+
+.life-pyramid-section .pyramid-position {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-color: var(--accent-secondary) !important;
+}
+
+.life-pyramid-section .pyramid-position:hover {
+    border-color: var(--accent-primary) !important;
+}
+
+.life-pyramid-section .position-number {
+    color: var(--accent-primary) !important;
+}
+
+.life-pyramid-section .position-age {
+    color: var(--text-secondary) !important;
+}
+
+.life-pyramid-section .position-meaning {
+    color: var(--text-primary) !important;
+}
+
+.life-pyramid-section .position-energy {
+    color: var(--accent-secondary) !important;
+}

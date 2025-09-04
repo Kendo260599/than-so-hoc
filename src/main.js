@@ -141,6 +141,9 @@ function handleSubmit(event) {
     // Show advanced features
     showAdvancedFeatures(results);
     
+    // Show Life Pyramid
+    showLifePyramid(date);
+    
     toast('Tính toán thành công!', 'success');
     
   } catch (error) {
@@ -473,6 +476,42 @@ function setupAdvancedTabs() {
       }
     });
   });
+}
+
+/**
+ * Show Life Pyramid
+ */
+async function showLifePyramid(dateStr) {
+  try {
+    const pyramidContainer = document.getElementById('lifePyramidContainer');
+    const pyramidDisplay = document.getElementById('lifePyramidDisplay');
+    
+    if (!pyramidContainer || !pyramidDisplay) {
+      console.warn('Pyramid container not found');
+      return;
+    }
+    
+    // Create birth date from string
+    const birthDate = new Date(dateStr);
+    
+    // Initialize pyramid visualizer
+    if (typeof LifePyramidVisualizer !== 'undefined') {
+      const visualizer = new LifePyramidVisualizer('lifePyramidDisplay');
+      
+      // Display pyramid
+      await visualizer.displayPyramid(birthDate);
+      
+      // Show container
+      pyramidContainer.classList.remove('section-hidden');
+      
+      console.log('Life pyramid displayed successfully');
+    } else {
+      console.warn('LifePyramidVisualizer not loaded');
+    }
+    
+  } catch (error) {
+    console.error('Error showing life pyramid:', error);
+  }
 }
 
 /**

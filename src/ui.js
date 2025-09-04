@@ -290,11 +290,13 @@ export function hideResults() {
   const pinnaclesContainer = document.getElementById('pinnaclesContainer');
   const enhancedContainer = document.getElementById('enhancedContainer');
   const advancedContainer = document.getElementById('advanced-features');
+  const pyramidContainer = document.getElementById('lifePyramidContainer');
   
   if (resultsContainer) resultsContainer.style.display = 'none';
   if (pinnaclesContainer) pinnaclesContainer.style.display = 'none';
   if (enhancedContainer) enhancedContainer.style.display = 'none';
   if (advancedContainer) advancedContainer.style.display = 'none';
+  if (pyramidContainer) pyramidContainer.classList.add('section-hidden');
 }
 
 /**

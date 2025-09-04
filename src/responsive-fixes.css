@@ -70,6 +70,96 @@ header h1 {
     font-size: clamp(2rem, 8vw, 3rem);
 }
 
+/* Pinnacles & Challenges responsive */
+.pinnacles-section {
+    padding: clamp(1rem, 4vw, 2rem);
+}
+
+.pinnacle-card, .challenge-card {
+    padding: clamp(0.75rem, 2vw, 1.25rem);
+    margin-bottom: 1rem;
+}
+
+.pinnacle-card h4, .challenge-card h4 {
+    font-size: clamp(1rem, 3vw, 1.25rem);
+}
+
+/* Compatibility section responsive */
+.compatibility-section {
+    padding: clamp(1rem, 4vw, 2rem);
+}
+
+.compatibility-inputs {
+    gap: clamp(1rem, 3vw, 2rem);
+}
+
+.person-input {
+    flex: 1;
+    min-width: 280px;
+}
+
+.compatibility-result {
+    padding: clamp(1rem, 3vw, 1.5rem);
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+}
+
+/* Advanced features responsive */
+.advanced-content {
+    padding: clamp(1rem, 4vw, 2rem);
+}
+
+.tab-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.tab-btn {
+    flex: 1;
+    min-width: 120px;
+    padding: clamp(0.5rem, 2vw, 0.75rem);
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
+}
+
+.tab-panel {
+    padding: clamp(1rem, 3vw, 1.5rem);
+}
+
+/* Feng Shui grid responsive */
+.directions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: clamp(0.75rem, 2vw, 1.5rem);
+}
+
+.direction-item {
+    padding: clamp(0.75rem, 2vw, 1rem);
+}
+
+/* Crystal/Color recommendations responsive */
+.recommendation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: clamp(0.75rem, 2vw, 1rem);
+}
+
+.recommendation-item {
+    padding: clamp(0.75rem, 2vw, 1rem);
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
+}
+
+/* Career suggestions responsive */
+.career-suggestions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: clamp(0.75rem, 2vw, 1rem);
+}
+
+.career-item {
+    padding: clamp(0.75rem, 2vw, 1rem);
+}
+
 /* Life Pyramid Mobile Fix */
 .life-pyramid-section {
     padding: clamp(1rem, 4vw, 2rem);
@@ -106,6 +196,29 @@ header h1 {
         grid-template-columns: repeat(2, 1fr);
         gap: 1.5rem;
     }
+    
+    /* Tablet-specific layouts */
+    .compatibility-inputs {
+        display: flex;
+        gap: 2rem;
+    }
+    
+    .tab-buttons {
+        justify-content: center;
+    }
+    
+    .tab-btn {
+        flex: 0 1 auto;
+        min-width: 140px;
+    }
+    
+    .directions-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .recommendation-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 /* Desktop styles */
@@ -128,6 +241,58 @@ header h1 {
     .calculate-btn {
         width: auto;
         padding: 1rem 3rem;
+    }
+    
+    /* Desktop-specific enhancements */
+    .compatibility-inputs {
+        display: flex;
+        gap: 3rem;
+    }
+    
+    .person-input {
+        min-width: 350px;
+    }
+    
+    .tab-buttons {
+        justify-content: flex-start;
+        gap: 1rem;
+    }
+    
+    .tab-btn {
+        flex: 0 1 auto;
+        min-width: 160px;
+        padding: 0.75rem 1.5rem;
+    }
+    
+    .directions-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .recommendation-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .career-suggestions {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    /* Advanced features desktop layout */
+    .advanced-content {
+        max-width: none;
+    }
+    
+    .tab-panel {
+        padding: 2rem;
+    }
+    
+    /* Results cards desktop layout */
+    .result-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .result-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     }
 }
 
